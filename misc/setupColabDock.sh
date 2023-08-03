@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # [1] clone colabdock && install packages
-git clone https://github.com/JeffSHF/ColabDock.git
+# git clone https://github.com/TimS-ml/ColabDock.git
 apt-get update
 apt-get install -y aria2 python3.8-venv
 
