@@ -3,6 +3,7 @@
 .idea/
 
 params/
+results/
 
 *.swp
 # *.png
