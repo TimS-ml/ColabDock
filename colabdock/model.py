@@ -8,6 +8,8 @@ from colabdock.docking import _dock
 from colabdock.ranking import _rank
 from colabdock.prep import _rest
 
+TOPK = 100
+
 class ColabDock(_dock, _rank, _rest):
     def __init__(self,
                  template,
@@ -115,15 +117,15 @@ class ColabDock(_dock, _rank, _rest):
         feature_topk, idx_topk = [], []
         for ith in range(self.round_num):
             feature = self.rank_fea(ith)
-            sel_idx = self.rank_struct(self.model_intra, feature[:, :5])
+            sel_idx = self.rank_struct(self.model_intra, feature[:, :TOPK])
             feature_topk.extend(feature[sel_idx, :])
             idx_topk.extend([[ith, ind] for ind in sel_idx])
         
         # rank between rounds
         feature_topk = np.array(feature_topk)
-        sel_idx = self.rank_struct(self.model_inter, feature_topk[:, :5])
+        sel_idx = self.rank_struct(self.model_inter, feature_topk[:, :TOPK])
 
-        # save top5 structures
+        # save topK structures
         for ith, ind in enumerate(sel_idx):
             iepoch, istep = idx_topk[ind]
             comm = f'cp {self.save_path}/pred/pred_{iepoch+1}_{istep+1}.pdb {self.save_path}/docked/top{ith+1}.pdb'
