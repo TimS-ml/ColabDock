@@ -146,6 +146,7 @@ class _rank:
             for k in range(len(feature)):
                 if i!=k:
                     t.append(feature[i] - feature[k])
+            # print(t)
             score.append(sum(rank_model.predict(np.array(t))))
         idx = [(i, score[i]) for i in range(len(score))]
         idx.sort(key=lambda x:x[1], reverse=True)

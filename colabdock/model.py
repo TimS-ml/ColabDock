@@ -117,13 +117,13 @@ class ColabDock(_dock, _rank, _rest):
         feature_topk, idx_topk = [], []
         for ith in range(self.round_num):
             feature = self.rank_fea(ith)
-            sel_idx = self.rank_struct(self.model_intra, feature[:, :TOPK])
+            sel_idx = self.rank_struct(self.model_intra, feature[:, :5], TOPK)
             feature_topk.extend(feature[sel_idx, :])
             idx_topk.extend([[ith, ind] for ind in sel_idx])
         
         # rank between rounds
         feature_topk = np.array(feature_topk)
-        sel_idx = self.rank_struct(self.model_inter, feature_topk[:, :TOPK])
+        sel_idx = self.rank_struct(self.model_inter, feature_topk[:, :5], TOPK)
 
         # save topK structures
         for ith, ind in enumerate(sel_idx):
